@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Gather</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="nav-left">
+            <img src="./assets/logo.svg" class="logo" alt="Gather logo">
+            <div class="brand">GATHER</div>
+        </div>
+
+        <div class="nav-right">
+
+            <button class="pill">
+                📁 collections
+            </button>
+
+        </div>
+
+    </nav>
+
+    <!-- INTRO -->
+
+            <div class="intro-text">
+                A personal collection of things — references, thoughts, books, and links — gathered across my time on the internet that I promised myself that I will return to later but never did.
+            </div>
+
+
+ <div class="drag-helper">
+    click + drag to explore
+</div>
+
+<button
+    class="add-resource-btn"
+    id="openModalBtn"
+>
+    + add resource
+</button>
+
+    <!-- VIEWPORT -->
+
+    <div class="viewport" id="viewport">
+
+        <div class="canvas" id="canvas">
+        </div>
+
+    </div>
+
+<!-- ADD RESOURCE MODAL -->
+
+<div
+    class="modal-overlay hidden"
+    id="modalOverlay"
+>
+
+    <div class="modal-card">
+
+        <!-- CLOSE -->
+
+        <button
+            class="close-modal"
+            id="closeModalBtn"
+        >
+            ×
+        </button>
+
+        <!-- TITLE -->
+
+        <h2>Add Resource</h2>
+
+        <!-- FORM -->
+
+        <form id="resourceForm">
+
+            <!-- TITLE -->
+
+            <input
+                type="text"
+                id="title"
+                placeholder="Title"
+                required
+            />
+
+            <!-- URL + PDF -->
+
+            <div class="resource-input-row">
+
+                <input
+                    type="url"
+                    id="url"
+                    placeholder="Link"
+                />
+
+                <span class="or-divider">
+                    OR
+                </span>
+
+                <label
+                    for="pdfFile"
+                    class="upload-button"
+                >
+                    Upload PDF
+                </label>
+
+                <input
+                    type="file"
+                    id="pdfFile"
+                    accept=".pdf"
+                    hidden
+                />
+
+                <div class="file-display">
+
+    <span
+        id="fileName"
+        class="file-name"
+    ></span>
+
+    <button
+        type="button"
+        id="removeFileBtn"
+        class="remove-file-btn hidden"
+    >
+        ×
+    </button>
+
+</div>
+
+            </div>
+
+            <!-- TYPE -->
+
+          <select id="resourceType" required>
+
+    <option value="">
+        Select Resource Type
+    </option>
+
+    <option value="Article">
+        Article
+    </option>
+
+    <option value="Blog">
+        Blog
+    </option>
+
+    <option value="Publication">
+        Publication
+    </option>
+
+    <option value="Research paper">
+        Research paper
+    </option>
+
+    <option value="Report">
+        Report
+    </option>
+
+    <option value="Book">
+        Book
+    </option>
+
+    <option value="Case study">
+        Case study
+    </option>
+
+    <option value="Portfolio">
+        Portfolio
+    </option>
+
+    <option value="Organisation">
+        Organisation
+    </option>
+
+    <option value="Community">
+        Community
+    </option>
+
+    <option value="Conference">
+        Conference
+    </option>
+
+    <option value="Framework">
+        Framework
+    </option>
+
+    <option value="Toolkit">
+        Toolkit
+    </option>
+
+    <option value="Repository">
+        Repository
+    </option>
+
+    <option value="Video">
+        Video
+    </option>
+
+    <option value="Podcast">
+        Podcast
+    </option>
+
+</select>
+
+            <!-- TAGS -->
+
+            <input
+                type="text"
+                id="tags"
+                placeholder="Tags"
+                required
+            />
+
+            <!-- BUTTON -->
+
+            <button type="submit">
+                Save
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

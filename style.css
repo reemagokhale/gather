@@ -1,0 +1,613 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+
+    overflow-y: scroll;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-family: 'AF Neue Berlin', sans-serif;
+}
+
+/* BACKGROUND */
+
+body {
+    background:
+        radial-gradient(circle at 18% 22%, rgba(210, 241, 198, 0.68) 0%, transparent 28%),
+        radial-gradient(circle at 72% 10%, rgba(255, 196, 196, 0.65) 0%, transparent 30%),
+        radial-gradient(circle at 88% 44%, rgba(255, 218, 188, 0.60) 0%, transparent 26%),
+        radial-gradient(circle at 20% 74%, rgba(249, 234, 191, 0.54) 0%, transparent 24%),
+        radial-gradient(circle at 54% 58%, rgba(214, 255, 241, 0.44) 0%, transparent 28%),
+        linear-gradient(155deg, #f9f6f1 0%, #f4f0e8 100%);
+}
+
+/* NAVBAR */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 80px;
+
+    padding: 0 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+   background: rgba(249,249,249,0.92);
+   border-bottom: 1px solid rgba(0,0,0,0.04);
+   z-index: 999;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo {
+    width: 20px;
+    height: 23px;
+
+    display: block;
+
+    object-fit: contain;
+
+    transform: translateY(-1px);
+}
+
+.brand {
+    font-family: 'Aboreto', serif;
+    font-size: 32px;
+    color: #191C22;
+}
+
+.nav-right {
+    display: flex;
+    gap: 8px;
+}
+
+.pill {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.72);
+  box-shadow: 0 4px 18px rgba(25,28,34,0.08);
+  font-family: inherit;
+  text-decoration: none;
+  font-size: 14px;
+  color: #191C22;
+  cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.pill:hover {
+    box-shadow:
+        0 8px 28px rgba(0,0,0,0.3);
+
+}
+
+
+
+/* VIEWPORT */
+
+.viewport {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    overflow: hidden;
+
+    cursor: grab;
+}
+
+.viewport.dragging {
+    cursor: grabbing;
+}
+
+/* CANVAS */
+
+.canvas {
+    position: absolute;
+
+    width: 5000px;
+    height: 4000px;
+
+    will-change: transform;
+}
+
+.canvas::before {
+    content: '';
+
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        radial-gradient(rgba(0, 0, 0, 0.06) 0.7px, transparent 0.7px);
+
+    background-size: 34px 34px;
+
+    pointer-events: none;
+}
+
+/* INTRO */
+
+.intro-text {
+    position: fixed;
+
+    top: clamp(110px, 12vh, 160px);
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: min(720px, 82vw);
+
+    text-align: center;
+
+    font-size: clamp(16px, 1.4vw, 18px);
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+
+    color: rgba(25, 28, 34, 0.4);
+
+    z-index: 500;
+}
+
+.drag-helper {
+    position: fixed;
+
+    left: 40px;
+    bottom: 32px;
+
+    font-family: 'AF Neue Berlin', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+
+    letter-spacing: 0.01em;
+
+    color: #191C22;
+
+    opacity: 0.48;
+
+    z-index: 500;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+/* FOLDERS */
+
+.folder {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 12px;
+
+    cursor: pointer;
+
+    transition: transform 0.2s ease;
+}
+
+.folder:hover {
+    transform: translateY(-6px);
+}
+
+.folder-img {
+    width: 88px;
+
+    height: auto;
+
+    user-select: none;
+    pointer-events: none;
+}
+
+.folder-name {
+    font-family:
+        'AF Neue Berlin',
+        sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0.01em;
+
+    color: rgba(25, 28, 34, 0.8);
+
+    text-align: center;
+
+    max-width: 160px;
+}
+
+/* =========================================
+   ADD RESOURCE BUTTON
+========================================= */
+
+.add-resource-btn {
+
+    position: fixed;
+    right: 32px;
+    bottom: 28px;
+    padding: 12px 20px;
+    border-radius: 999px;
+    background: rgba(249, 249, 249, 0.20);
+    border: 1px solid #f4f0e8;
+    box-shadow: 0 2px 6px 0 rgba(25, 28, 34, 0.20);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+
+    font-family: 'AF Neue Berlin', sans-serif;
+    font-size: 15px;
+
+    color: #191C22;
+    text-decoration: none;
+
+    z-index: 999;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+.add-resource-btn:hover {
+
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 24px rgba(0,0,0,0.12);
+
+}
+
+/* =========================================
+   MODAL
+========================================= */
+
+.modal-overlay {
+
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,0.08);
+
+    backdrop-filter: blur(12px);
+
+    z-index: 9999;
+}
+
+.hidden {
+    display: none;
+}
+
+/* =========================================
+   ADD RESOURCE MODAL
+========================================= */
+
+.form-wrapper {
+
+    width: 520px;
+    padding: 40px;
+    border-radius: 28px;
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(18px);
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.08);
+
+    position: relative;
+}
+
+.form-wrapper h1 {
+
+    font-size: 42px;
+    margin-bottom: 28px;
+    color: #191C22;
+}
+
+/* ADD RESOURCE TITLE */
+
+h2 {
+
+    font-family: 'AF Neue Berlin', sans-serif;
+    font-size: 36px;
+    font-weight: 650;
+    line-height: 0.95;
+
+    letter-spacing: 0em;
+
+    color: #191C22;
+
+    margin-bottom: 28px;
+}
+
+.close-modal {
+
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    border-radius: 999px;
+
+    background: rgba(0,0,0,0.06);
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    color: rgba(25,28,34,0.7);
+
+    transition: background 0.2s ease;
+}
+
+.close-modal:hover {
+    background: rgba(0,0,0,0.1);
+}
+
+form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+form input {
+
+    width: 100%;
+    padding: 16px 18px;
+    border: none;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.8);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+}
+
+/* URL + PDF ROW */
+
+.resource-input-row {
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+}
+
+.resource-input-row input[type="url"] {
+
+    flex: 1;
+    min-width: 0;
+}
+
+/* OR TEXT */
+
+.or-divider {
+
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: rgba(25, 28, 34, 0.35);
+}
+
+/* FILE DISPLAY */
+
+.file-display {
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    min-width: 0;
+}
+
+/* FILE NAME */
+
+.file-name {
+
+    font-size: 15px;
+    font-weight: 500;
+
+    color: #191C22;
+
+    opacity: 1;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    max-width: 180px;
+}
+
+.file-name-wrapper {
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+}
+
+/* REMOVE BUTTON */
+
+.remove-file-btn {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 18px;
+    line-height: 1;
+
+    color: rgba(25, 28, 34, 0.45);
+
+    transform: translateY(-1px);
+
+    transition: opacity 0.2s ease;
+
+}
+
+.remove-file-btn:hover {
+
+    opacity: 0.7;
+
+}
+
+/* HIDDEN */
+
+.hidden {
+    display: none;
+}
+
+/* UPLOAD BUTTON */
+
+.upload-button {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 20px;
+    border-radius: 999px;
+    background: white;
+    border: 1px solid rgba(25,28,34,0.08);
+    box-shadow:
+        0 4px 16px rgba(0,0,0,0.05);
+
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: #191C22;
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.upload-button:hover {
+
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 22px rgba(0,0,0,0.08);
+}
+
+/* FILE NAME */
+
+.file-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #191C22;
+    opacity: 1;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+}
+
+/* DROPDOWN */
+
+form select {
+
+    width: 100%;
+
+    padding: 16px 18px;
+
+    border: none;
+    border-radius: 16px;
+
+    background:
+        rgba(255,255,255,0.8)
+        url('./assets/arrow-down.svg');
+
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 14px;
+
+    font-size: 15px;
+    font-family: 'AF Neue Berlin', sans-serif;
+    font-weight: 400;
+
+    color: #757575;
+
+    outline: none;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    cursor: pointer;
+}
+
+/* SUBMIT BUTTON */
+
+form button {
+
+    margin-top: 10px;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 999px;
+
+    background: #191C22;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+form button:hover {
+
+    opacity: 0.92;
+
+    transform: translateY(-1px);
+}
+
+/* PAGE TRANSITIONS */
+
+body {
+    opacity: 0;
+    transition: opacity 0.45s ease;
+}
+
+body.page-loaded {
+    opacity: 1;
+}
+
+body.page-exit {
+    opacity: 0;
+}

@@ -1,0 +1,336 @@
+/* ───────────────────────────────
+   RESET
+─────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+
+    overflow-y: scroll;
+}
+
+/* ───────────────────────────────
+   BODY
+─────────────────────────────── */
+body {
+  font-family: 'AF Neue Berlin', 'Inter', sans-serif;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(210,241,198,0.65) 0%, transparent 28%),
+    radial-gradient(circle at 72% 10%, rgba(255,196,196,0.65) 0%, transparent 30%),
+    linear-gradient(155deg, #f9f6f1 0%, #f4f0e8 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: #191C22;
+  overflow-x: hidden;
+}
+
+/* ───────────────────────────────
+   NAVBAR
+─────────────────────────────── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(249,249,249,0.92);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  z-index: 999;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.brand {
+  font-family: 'Aboreto', serif;
+  font-size: 32px;
+  letter-spacing: 0.03em;
+  color: #191C22;
+}
+
+
+ .collections-button {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.72);
+  box-shadow: 0 4px 18px rgba(25,28,34,0.08);
+  font-family: inherit;
+  text-decoration: none;
+  font-size: 14px;
+  color: #191C22;
+  cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.collections-button:hover {
+    box-shadow:
+        0 8px 28px rgba(0,0,0,0.3);
+}
+
+/* ───────────────────────────────
+   PAGE LAYOUT
+─────────────────────────────── */
+.folder-page {
+  padding: 140px 48px 80px;
+}
+
+/* ───────────────────────────────
+   FOLDER TITLE
+─────────────────────────────── */
+.folder-header {
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  gap: 6px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(25, 28, 34, 0.8);
+  text-decoration: none;
+  transition: color 0.18s;
+}
+ 
+.back-btn:hover {
+  color: #191C22;
+}
+ 
+.back-arrow {
+  width: 14px;
+  height: 14px;
+  display: block;
+  opacity: 1;
+  transition: opacity 0.18s;
+}
+ 
+.back-btn:hover .back-arrow {
+  opacity: 1;
+}
+
+#folderTitle {
+  font-family: 'AF Neue Berlin', 'Inter', sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  color: #191C22;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+/* ───────────────────────────────
+   SHELF ROWS
+─────────────────────────────── */
+#resourcesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.shelf-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.shelf-plank {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  margin-top: -32px; /* pull shelf up snug under cards */
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ───────────────────────────────
+   GRID
+─────────────────────────────── */
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  min-width: 0;
+}
+
+/* ───────────────────────────────
+   CARD
+─────────────────────────────── */
+.resource-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  min-width: 0; /* prevents cards from overflowing grid columns */
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.resource-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.10);
+}
+
+/* ───────────────────────────────
+   CARD IMAGE
+─────────────────────────────── */
+.resource-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #EDEAE4;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 18px;
+  flex-shrink: 0;
+}
+
+.resource-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Hide image slot entirely if no image provided */
+.resource-image.hidden {
+  display: none;
+}
+
+/* ───────────────────────────────
+   CARD TYPE LABEL
+─────────────────────────────── */
+.resource-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(25,28,34,0.40);
+  margin-bottom: 24px;
+}
+
+/* ───────────────────────────────
+   CARD TITLE
+─────────────────────────────── */
+.resource-title {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+    color: #191C22;
+    height: 120px;
+    display: flex;
+    align-items: flex-start;
+}
+
+/* WHY I SAVED THIS */
+
+.intent-wrapper {
+    margin-top: 14px;
+    margin-bottom: 32px;
+}
+
+.intent-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(25, 28, 34, 0.42);
+    margin-bottom: 6px;
+}
+
+.intent-text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: #191C22;
+}
+
+/* ───────────────────────────────
+   TAGS
+─────────────────────────────── */
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tag-pill {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1.5px solid #6ec8ff;
+  background: rgba(255,255,255,0.6);
+  font-size: 14px;
+  font-weight: 400;
+  color: #2f2f2f;
+}
+
+/* ───────────────────────────────
+   EMPTY / ERROR STATE
+─────────────────────────────── */
+.state-msg {
+  grid-column: 1 / -1;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(25,28,34,0.4);
+  padding: 40px 0;
+}
+
+/* ───────────────────────────────
+   RESPONSIVE
+─────────────────────────────── */
+@media (max-width: 1200px) {
+  .resources-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .resources-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .resources-grid { grid-template-columns: 1fr; }
+  .folder-page { padding: 120px 24px 60px; }
+  .navbar { padding: 0 24px; }
+  #folderTitle { font-size: 36px; }
+}
+
+/* PAGE TRANSITIONS */
+
+body {
+    opacity: 0;
+    transition: opacity 0.45s ease;
+}
+
+body.page-loaded {
+    opacity: 1;
+}
+
+body.page-exit {
+    opacity: 0;
+}
