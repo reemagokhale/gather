@@ -444,8 +444,8 @@ form.addEventListener(
         const urlInput =
             document.getElementById('url').value;
 
-        const type =
-            document.getElementById('resourceType').value;
+        const resourceType =
+    document.getElementById('resourceType').value;
 
         const intent =
     document.getElementById('intent').value;
@@ -510,7 +510,7 @@ const dateOfCreation =
     title: title,
     resource_type: resourceType,
     intent: intent,
-    date_of_creation: dateOfCreation,
+    date_of_creation: dateOfCreation || null,
     url: finalURL,
     tags: tags
 }
@@ -518,12 +518,12 @@ const dateOfCreation =
 
         if (error) {
 
-            console.error(error);
+    console.error('SUPABASE ERROR:', error);
 
-            alert('Failed to save resource');
+    alert(error.message);
 
-            return;
-        }
+    return;
+}
 
         /* SUCCESS */
 
@@ -531,8 +531,7 @@ const dateOfCreation =
 
         form.reset();
 
-        fileNameText.textContent =
-            'No PDF selected';
+        fileNameText.textContent = '';
 
         modal.classList.add('hidden');
 
