@@ -445,7 +445,13 @@ form.addEventListener(
             document.getElementById('url').value;
 
         const type =
-            document.getElementById('type').value;
+            document.getElementById('resourceType').value;
+
+        const intent =
+    document.getElementById('intent').value;
+
+const dateOfCreation =
+    document.getElementById('dateOfCreation').value;
 
         const tags =
             document.getElementById('tags').value;
@@ -501,11 +507,13 @@ form.addEventListener(
                 .from('Resources')
                 .insert([
                     {
-                        title,
-                        url: finalURL,
-                        type,
-                        tags
-                    }
+    title: title,
+    resource_type: resourceType,
+    intent: intent,
+    date_of_creation: dateOfCreation,
+    url: finalURL,
+    tags: tags
+}
                 ]);
 
         if (error) {

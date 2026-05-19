@@ -480,6 +480,12 @@ form input {
 
 }
 
+input[type="date"] {
+
+    color: #191C22;
+    font-family: 'AF Neue Berlin', sans-serif;
+}
+
 /* HIDDEN */
 
 .hidden {
