@@ -71,15 +71,99 @@ function createCard(resource) {
   }
 
   // Type label
-  const label = document.createElement('p');
-  label.className = 'resource-label';
-  label.textContent =
+const label = document.createElement('p');
+
+label.className =
+    'resource-label';
+
+label.textContent =
     resource.resource_type || 'Resource';
 
- // Title
+/* PUBLISHED DATE */
+
+const publishedDate =
+    document.createElement('p');
+
+publishedDate.className =
+    'published-date';
+
+if (resource.date_of_creation) {
+
+    const date =
+    new Date(resource.date_of_creation);
+
+const day =
+    date.getDate();
+
+const month =
+    date.toLocaleString(
+        'en-GB',
+        { month: 'long' }
+    );
+
+const year =
+    date.getFullYear();
+
+/* ORDINAL */
+
+function getOrdinal(n) {
+
+    if (n > 3 && n < 21) return 'th';
+
+    switch (n % 10) {
+
+        case 1:
+            return 'st';
+
+        case 2:
+            return 'nd';
+
+        case 3:
+            return 'rd';
+
+        default:
+            return 'th';
+    }
+}
+
+/* FORMAT */
+
+let formattedDate;
+
+/* IF DAY = 1
+   SHOW MONTH + YEAR ONLY */
+
+if (day === 1) {
+
+    formattedDate =
+        `${month} ${year}`;
+
+} else {
+
+    formattedDate =
+        `${day}${getOrdinal(day)} ${month} ${year}`;
+}
+
+    publishedDate.textContent =
+        `Published on: ${formattedDate}`;
+
+} else {
+
+    publishedDate.innerHTML =
+        '&nbsp;';
+
+}
+
+/* TITLE */
 
 const title =
     document.createElement('h2');
+
+title.className =
+    'resource-title';
+
+title.textContent =
+    resource.title || 'Untitled';
 
 title.className =
     'resource-title';
@@ -141,10 +225,16 @@ tagList.forEach(tag => {
 });
 
   card.appendChild(imageDiv);
-  card.appendChild(label);
-  card.appendChild(title);
-  card.appendChild(intentWrapper);
-  card.appendChild(tagsDiv);
+
+card.appendChild(label);
+
+card.appendChild(publishedDate);
+
+card.appendChild(title);
+
+card.appendChild(intentWrapper);
+
+card.appendChild(tagsDiv);
 
   return card;
 }
