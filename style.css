@@ -93,6 +93,11 @@ body {
     transform 0.2s ease;
 }
 
+.pill-icon {
+position: relative;
+top: 2px;
+}
+
 .pill:hover {
     box-shadow:
         0 8px 28px rgba(0,0,0,0.3);

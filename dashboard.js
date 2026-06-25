@@ -1,32 +1,65 @@
+(async () => {
+
+    const {
+        data: { session }
+    } =
+    await supabaseClient.auth.getSession();
+
+    if (!session) {
+
+        window.location.href =
+            "admin.html";
+
+        return;
+
+    }
+
+})();
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+if (logoutBtn) {
+
+    logoutBtn.addEventListener(
+        "click",
+        async () => {
+
+            await supabaseClient.auth.signOut();
+
+            window.location.href =
+                "admin.html";
+
+        }
+    );
+
+}
+
 /* =========================================
    ELEMENTS
 ========================================= */
 
 const viewport =
-    document.getElementById('viewport');
+    document.getElementById("viewport");
 
 const canvas =
-    document.getElementById('canvas');
+    document.getElementById("canvas");
 
 
 /* =========================================
-   PAGE LOAD
+   PAGE TRANSITION
 ========================================= */
 
 window.addEventListener(
-    'DOMContentLoaded',
+    "DOMContentLoaded",
     () => {
-
-        document.body.classList.add('page-loaded');
-
-        loadFolders();
-
+        document.body.classList.add("page-loaded");
     }
 );
 
 
 /* =========================================
-   CANVAS POSITION
+   PAN / DRAG
 ========================================= */
 
 let isDragging = false;
@@ -51,16 +84,16 @@ function updateCanvas() {
 
 
 /* =========================================
-   DRAG
+   MOUSE DRAGGING
 ========================================= */
 
 viewport.addEventListener(
-    'mousedown',
-    (e) => {
+    "mousedown",
+    e => {
 
         isDragging = true;
 
-        viewport.classList.add('dragging');
+        viewport.classList.add("dragging");
 
         startX = e.clientX;
         startY = e.clientY;
@@ -70,8 +103,8 @@ viewport.addEventListener(
 
 
 window.addEventListener(
-    'mousemove',
-    (e) => {
+    "mousemove",
+    e => {
 
         if (!isDragging) return;
 
@@ -88,12 +121,12 @@ window.addEventListener(
 
 
 window.addEventListener(
-    'mouseup',
+    "mouseup",
     () => {
 
         isDragging = false;
 
-        viewport.classList.remove('dragging');
+        viewport.classList.remove("dragging");
 
     }
 );
@@ -104,18 +137,18 @@ window.addEventListener(
 ========================================= */
 
 viewport.addEventListener(
-    'wheel',
-    (e) => {
+    "wheel",
+    e => {
 
         e.preventDefault();
 
-        currentX -= e.deltaX * 0.9;
-        currentY -= e.deltaY * 0.9;
+        currentX -= e.deltaX * .9;
+        currentY -= e.deltaY * .9;
 
         updateCanvas();
 
     },
-    { passive: false }
+    { passive:false }
 );
 
 
@@ -124,25 +157,21 @@ viewport.addEventListener(
 ========================================= */
 
 window.addEventListener(
-    'dragstart',
-    (e) => {
-
-        e.preventDefault();
-
-    }
+    "dragstart",
+    e => e.preventDefault()
 );
 
 
 /* =========================================
-   LOAD TAGS
+   LOAD FOLDERS
 ========================================= */
 
 async function loadFolders() {
 
     const { data, error } =
         await supabaseClient
-            .from('Resources')
-            .select('tags');
+            .from(GATHER.table)
+            .select("tags");
 
     if (error) {
 
@@ -158,17 +187,19 @@ async function loadFolders() {
 
         if (!resource.tags) return;
 
-        resource.tags
-            .split(',')
-            .map(tag => tag.trim())
-            .filter(Boolean)
-            .forEach(tag => allTags.push(tag));
+        allTags.push(
+
+            ...resource.tags
+                .split(",")
+                .map(t => t.trim())
+                .filter(Boolean)
+
+        );
 
     });
 
     const uniqueTags =
-        [...new Set(allTags)]
-            .sort((a, b) => a.localeCompare(b));
+        [...new Set(allTags)];
 
     generateFolders(uniqueTags);
 
@@ -176,75 +207,75 @@ async function loadFolders() {
 
 
 /* =========================================
-   GENERATE FOLDERS
+   GENERATE
 ========================================= */
 
 function generateFolders(tags) {
 
-    canvas.innerHTML = '';
+    canvas.innerHTML = "";
 
-    const columns = 6;
-
-    const spacingX = 260;
-    const spacingY = 220;
-
-    const centerOffsetX = 150;
-    const centerOffsetY = 250;
-
-    tags.forEach((tag, index) => {
+    tags.forEach((tag,index)=>{
 
         const folder =
-            document.createElement('div');
+            document.createElement("div");
 
-        folder.className = 'folder';
+        folder.className =
+            "folder";
+
+        const columns = 6;
+
+        const spacingX = 260;
+        const spacingY = 220;
 
         const x =
-            centerOffsetX +
+            150 +
             (index % columns) * spacingX +
-            (Math.random() * 120 - 60);
+            (Math.random()*120-60);
 
         const y =
-            centerOffsetY +
-            Math.floor(index / columns) * spacingY +
-            (Math.random() * 140 - 70);
+            250 +
+            Math.floor(index/columns)*spacingY +
+            (Math.random()*140-70);
 
-        folder.style.left = `${x}px`;
-        folder.style.top = `${y}px`;
+        folder.style.left =
+            `${x}px`;
+
+        folder.style.top =
+            `${y}px`;
 
         const img =
-            document.createElement('img');
+            document.createElement("img");
 
         img.src =
-            './assets/folder.png';
+            "./assets/folder.png";
 
         img.className =
-            'folder-img';
+            "folder-img";
 
         const name =
-            document.createElement('div');
+            document.createElement("div");
 
         name.className =
-            'folder-name';
+            "folder-name";
 
         name.textContent =
             tag;
 
         folder.appendChild(img);
-
         folder.appendChild(name);
 
         folder.addEventListener(
-            'click',
-            () => {
+            "click",
+            ()=>{
 
-                document.body.classList.add('page-exit');
+                document.body.classList.add("page-exit");
 
-                setTimeout(() => {
+                setTimeout(()=>{
 
                     window.location.href =
-                        `folder.html?tag=${encodeURIComponent(tag)}`;
+    `dashboard-folder.html?tag=${encodeURIComponent(tag)}`;
 
-                }, 300);
+                },300);
 
             }
         );
@@ -254,3 +285,10 @@ function generateFolders(tags) {
     });
 
 }
+
+
+/* =========================================
+   START
+========================================= */
+
+loadFolders();

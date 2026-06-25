@@ -64,15 +64,26 @@ body {
   padding: 10px 18px;
   border-radius: 999px;
   background: rgba(255,255,255,0.72);
-  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 18px rgba(25,28,34,0.08);
   font-family: inherit;
+  text-decoration: none;
   font-size: 14px;
   color: #191C22;
   cursor: pointer;
-  transition: box-shadow 0.2s;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
+
+.pill-icon {
+position: relative;
+top: 2px;
+}
+
 .pill:hover {
-  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+    box-shadow:
+        0 8px 28px rgba(0,0,0,0.3);
+
 }
 
 /* ───────────────────────────────

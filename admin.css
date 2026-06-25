@@ -1,0 +1,132 @@
+body {
+
+    margin: 0;
+
+    height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-family: "Inter", sans-serif;
+
+    background:
+        radial-gradient(circle at top left,#dff5bf 0%,transparent 35%),
+        radial-gradient(circle at top right,#ffd8d0 0%,transparent 35%),
+        radial-gradient(circle at bottom,#ffe8c5 0%,transparent 40%),
+        #f8f8f6;
+
+}
+
+.login-card{
+
+    width:420px;
+
+    background:rgba(255,255,255,.3);
+
+    backdrop-filter:blur(20px);
+
+    border-radius:28px;
+
+    padding:54px;
+
+    box-sizing:border-box;
+
+    box-shadow:
+        0 12px 40px rgba(0,0,0,.08);
+
+}
+
+.login-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap: 10px;
+
+    margin-bottom:42px;
+
+}
+
+.login-logo {
+
+    width: 26px;
+    height: 26px;
+
+    display: block;
+    flex-shrink: 0;
+
+}
+
+.login-header h1{
+
+    margin:0;
+
+    font-family:'Aboreto',serif;
+
+    font-size:32px;
+
+    font-weight:400;
+
+    color:#191C22;
+
+    letter-spacing:1px;
+
+}
+
+input{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    margin-bottom:16px;
+
+    border:none;
+
+    border-radius:14px;
+
+    font-size:16px;
+
+    box-sizing:border-box;
+
+}
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:999px;
+
+    background:#1d2028;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+}
+
+button:hover{
+
+    opacity:.9;
+
+}
+
+#loginMessage{
+
+    margin-top:18px;
+
+    text-align:center;
+
+    color:#d33;
+
+}

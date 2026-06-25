@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gather • Admin</title>
+
+    <link rel="stylesheet" href="admin.css">
+
+    <link rel="icon" type="image/png" href="assets/favicon1.png?v=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="config.js"></script>
+
+</head>
+
+<body>
+
+<div class="login-card">
+
+    <div class="login-header">
+
+        <img
+            src="./assets/logo.svg"
+            class="login-logo"
+            alt="Gather Logo"
+        >
+
+        <h1>GATHER</h1>
+
+    </div>
+
+    <form id="loginForm">
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            autocomplete="email"
+            required
+        >
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            autocomplete="current-password"
+            required
+        >
+
+        <button
+            type="submit"
+            id="loginButton"
+        >
+            Sign in
+        </button>
+
+    </form>
+
+    <p id="loginMessage"></p>
+
+</div>
+
+<script src="admin.js"></script>
+
+</body>
+
+</html>
