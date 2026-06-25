@@ -1,80 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    
     <meta charset="UTF-8" />
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gather</title>
 
     <!-- STYLES -->
     <link rel="stylesheet" href="folder.css">
-    <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Inter:wght@300;400;500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/favicon1.png?v=1">
 
-         <link rel="icon" type="image/png" href="assets/favicon1.png?v=1">
-
-   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
-
+    <!-- NAVBAR -->
     <nav class="navbar">
-
         <div class="nav-left">
             <img src="./assets/logo.svg" class="logo" alt="Gather logo">
             <div class="brand">GATHER</div>
         </div>
-
         <div class="nav-right">
-
             <a href="index.html" class="collections-button">
-    📁 collections
-</a>
-
+                📁 collections
+            </a>
         </div>
-
     </nav>
 
     <!-- PAGE -->
-
     <main class="folder-page">
 
         <!-- HEADER -->
-
         <section class="folder-header">
             <a href="index.html" class="back-btn">
-        <img src="./assets/arrow-left.svg" alt="back" class="back-arrow">
-        back
-      </a>
-
+                <img src="./assets/arrow-left.svg" alt="back" class="back-arrow">
+                back
+            </a>
             <h1 id="folderTitle"></h1>
-
         </section>
 
-      <section
-    id="resourcesContainer"
-    class="resources-grid"
->
-</section>
-
-<section id="resourcesContainer"></section>
+        <section id="resourcesContainer"></section>
 
     </main>
 
-    <!-- SCRIPT -->
+    <!-- ═══════════════════════════════════════
+         EDIT RESOURCE MODAL
+         (same structure/fields as index.html's add-resource modal,
+          reused here for editing)
+    ═══════════════════════════════════════ -->
+    <div class="modal-overlay hidden" id="modalOverlay">
+        <div class="form-wrapper">
 
+            <button class="close-modal" id="closeModalBtn">×</button>
+
+            <h2 id="modalHeading">Edit Resource</h2>
+
+            <form id="resourceForm">
+
+                <input type="text" id="title" placeholder="Title" required>
+
+                <div class="resource-input-row">
+                    <input type="url" id="url" placeholder="https://...">
+                    <span class="or-divider">OR</span>
+
+                    <label class="upload-button" for="pdfFile">
+                        Upload PDF
+                    </label>
+                    <input type="file" id="pdfFile" accept="application/pdf" class="hidden">
+
+                    <div class="file-display">
+                        <div class="file-name-wrapper">
+                            <span class="file-name" id="fileName"></span>
+                            <button type="button" class="remove-file-btn hidden" id="removeFileBtn">×</button>
+                        </div>
+                    </div>
+                </div>
+
+                <select id="resourceType" required>
+                    <option value="" disabled selected>Select Resource Type</option>
+                    <option>Article</option>
+                    <option>Blog</option>
+                    <option>Publication</option>
+                    <option>Research paper</option>
+                    <option>Report</option>
+                    <option>Book</option>
+                    <option>Case study</option>
+                    <option>Portfolio</option>
+                    <option>Organisation</option>
+                    <option>Community</option>
+                    <option>Conference</option>
+                    <option>Framework</option>
+                    <option>Toolkit</option>
+                    <option>Repository</option>
+                    <option>Video</option>
+                    <option>Podcast</option>
+                </select>
+
+                <select id="intent" required>
+                    <option value="" disabled selected>Why am I saving this?</option>
+                    <option>Inspiration</option>
+                    <option>Consumption</option>
+                    <option>Application</option>
+                    <option>Career / Practice</option>
+                </select>
+
+                <input type="date" id="dateOfCreation" placeholder="Date of creation">
+
+                <input type="text" id="tags" placeholder="Tags (comma separated)">
+
+                <button type="submit" id="submitBtn">Save</button>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
     <script src="folder.js"></script>
 
 </body>
-
 </html>
