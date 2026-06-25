@@ -286,6 +286,119 @@ function generateFolders(tags) {
 
 }
 
+/* =========================================
+   ADD RESOURCE MODAL
+========================================= */
+
+const addButton      = document.getElementById("openModalBtn");
+const modal           = document.getElementById("modalOverlay");
+const closeModalBtn   = document.getElementById("closeModalBtn");
+const form            = document.getElementById("resourceForm");
+const pdfInput        = document.getElementById("pdfFile");
+const fileNameText    = document.getElementById("fileName");
+const removeFileBtn   = document.getElementById("removeFileBtn");
+
+/* OPEN */
+addButton.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+});
+
+/* CLOSE */
+closeModalBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    form.reset();
+    fileNameText.textContent = "";
+    removeFileBtn.classList.add("hidden");
+});
+
+/* SHOW SELECTED FILE NAME */
+pdfInput.addEventListener("change", () => {
+    const file = pdfInput.files[0];
+    if (file) {
+        fileNameText.textContent = file.name;
+        removeFileBtn.classList.remove("hidden");
+    } else {
+        fileNameText.textContent = "";
+        removeFileBtn.classList.add("hidden");
+    }
+});
+
+/* REMOVE SELECTED FILE */
+removeFileBtn.addEventListener("click", () => {
+    pdfInput.value = "";
+    fileNameText.textContent = "";
+    removeFileBtn.classList.add("hidden");
+});
+
+/* =========================================
+   SAVE RESOURCE
+========================================= */
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const title         = document.getElementById("title").value;
+    const urlInput       = document.getElementById("url").value;
+    const resourceType   = document.getElementById("resourceType").value;
+    const intent         = document.getElementById("intent").value;
+    const dateOfCreation = document.getElementById("dateOfCreation").value;
+    const tags           = document.getElementById("tags").value;
+
+    let finalURL = urlInput;
+
+    /* PDF UPLOAD (optional) */
+    const file = pdfInput.files[0];
+    if (file) {
+
+        const fileName = `${Date.now()}-${file.name}`;
+
+        const { error: uploadError } = await supabaseClient.storage
+            .from(GATHER.pdfBucket || "PDFs")
+            .upload(fileName, file);
+
+        if (uploadError) {
+            console.error("PDF UPLOAD ERROR:", uploadError);
+            alert("PDF upload failed: " + uploadError.message);
+            return;
+        }
+
+        const { data: publicURLData } = supabaseClient.storage
+            .from(GATHER.pdfBucket || "PDFs")
+            .getPublicUrl(fileName);
+
+        finalURL = publicURLData.publicUrl;
+    }
+
+    /* SAVE TO DATABASE */
+    const { error } = await supabaseClient
+        .from(GATHER.table)
+        .insert([{
+            title: title,
+            resource_type: resourceType,
+            intent: intent,
+            date_of_creation: dateOfCreation || null,
+            url: finalURL,
+            tags: tags
+        }]);
+
+    if (error) {
+        console.error("SUPABASE ERROR:", error);
+        alert(error.message);
+        return;
+    }
+
+    alert("Resource added successfully");
+
+    form.reset();
+    fileNameText.textContent = "";
+    removeFileBtn.classList.add("hidden");
+    modal.classList.add("hidden");
+
+    /* REFRESH FOLDERS */
+    loadFolders();
+
+});
+
 
 /* =========================================
    START
